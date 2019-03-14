@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Stackoverflow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <form class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="inTitle" th:value="${inTitle}"
+                           placeholder="in titile">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Find</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-stripped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" th:text="#{date}"></th>
+                <th scope="col" th:text="#{author}"></th>
+                <th scope="col" th:text="#{title}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="q : ${questions}" th:class="${q.isAnswered} ? table-success">
+                <td th:text="${#dates.formatISO(q.date)}">Mark</td>
+                <td th:text="${q.author}"></td>
+                <td><a th:href="${q.link}" th:text="${q.title}"></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-auto">
+            <form th:if="${hasMore}">
+                <input type="text" name="inTitle" th:value="${inTitle}" hidden>
+                <input hidden type="text" name="page" th:value="${page + 1}">
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
